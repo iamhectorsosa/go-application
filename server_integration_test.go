@@ -7,7 +7,10 @@ import (
 )
 
 func TestRecordingWingsAndRetrievingThem(t *testing.T) {
-	store := NewInMemoryPlayerStore()
+	database, cleanDatabase := createTempFile(t, "")
+	defer cleanDatabase()
+	store := &FileSystemPlayerStore{database}
+	// store := NewInMemoryPlayerStore()
 	server := NewPlayerServer(store)
 	player := "Pepper"
 
@@ -28,8 +31,8 @@ func TestRecordingWingsAndRetrievingThem(t *testing.T) {
 		server.ServeHTTP(response, newLeagueRequest())
 		assertStatus(t, response.Code, http.StatusOK)
 
-		got := getLeagueFromResponse(t, response.Body)
-		want := []Player{
+		got, _ := NewLeague(response.Body)
+		want := League{
 			{"Pepper", 3},
 		}
 		assertLeague(t, got, want)
