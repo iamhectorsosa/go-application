@@ -1,4 +1,4 @@
-package main
+package poker
 
 import (
 	"log"
@@ -23,11 +23,11 @@ func TestFileSystemStore(t *testing.T) {
 			{"Chris", 33},
 			{"Cleo", 10},
 		}
-		assertLeague(t, got, want)
+		AssertLeague(t, got, want)
 
 		// assert again
 		got = store.GetLeague()
-		assertLeague(t, got, want)
+		AssertLeague(t, got, want)
 	})
 
 	t.Run("get player score", func(t *testing.T) {
@@ -79,10 +79,10 @@ func TestFileSystemStore(t *testing.T) {
 			{"Chris", 33},
 			{"Cleo", 10},
 		}
-		assertLeague(t, got, want)
+		AssertLeague(t, got, want)
 
 		got = store.GetLeague()
-		assertLeague(t, got, want)
+		AssertLeague(t, got, want)
 
 	})
 }
